@@ -1,0 +1,40 @@
+kernel.test-pass-predictor|kernel|:
+- actual_at: '2026-04-27T19:12:29.491Z'
+  actual_value: 'pytest exit code 0. PASS. Elapsed 24293ms. Tail: idge.py ..........                                 [ 64%]
+
+    tests/test_selector_event_surrogate.py ......                            [ 71%]
+
+    tests/test_v1_prediction_economics.py ..........................         [100%]
+
+
+    ============================= 91 passed in 23.25s =============================='
+  ground_truth_resolution_id: 01KQ85PYSKEY9S74VJE8CPQHFC
+  predicted_at: '2026-04-27T19:12:04.815Z'
+  predicted_value: true
+  prediction_id: pred-test-pass-prediction-001
+- actual_at: '2026-04-27T19:14:00.335Z'
+  actual_value: 'pytest exit code 0. PASS. Elapsed 25099ms. Tail: idge.py ..........                                 [ 64%]
+
+    tests/test_selector_event_surrogate.py ......                            [ 71%]
+
+    tests/test_v1_prediction_economics.py ..........................         [100%]
+
+
+    ============================= 91 passed in 23.98s =============================='
+  ground_truth_resolution_id: 01KQ85SQGF70A74GWKS7RH8E48
+  predicted_at: '2026-04-27T19:13:34.883Z'
+  predicted_value: true
+  prediction_id: pred-test-pass-prediction-002
+- actual_at: '2026-04-27T19:15:28.744Z'
+  actual_value: 'pytest exit code 0. PASS. Elapsed 24673ms. Tail: idge.py ..........                                 [ 67%]
+
+    tests/test_selector_event_surrogate.py ......                            [ 73%]
+
+    tests/test_v1_prediction_economics.py ..........................         [100%]
+
+
+    ============================= 97 passed in 23.62s =============================='
+  ground_truth_resolution_id: 01KQ85WDV9VMATP5J75MSJCZTA
+  predicted_at: '2026-04-27T19:15:03.679Z'
+  predicted_value: true
+  prediction_id: pred-test-pass-prediction-003

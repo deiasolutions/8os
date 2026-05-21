@@ -1,0 +1,54 @@
+{
+  "$id": "kernel.ir.supersede.v1.output",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "new_ir_id": {
+          "type": "string"
+        },
+        "new_path": {
+          "type": "string"
+        },
+        "old_ir_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "old_ir_id",
+        "new_ir_id",
+        "new_path"
+      ],
+      "type": "object"
+    },
+    "event_id": {
+      "type": "string"
+    },
+    "indexes_updated": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "op": {
+      "const": "kernel.ir.supersede"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "ok"
+    }
+  },
+  "required": [
+    "schema_version",
+    "op",
+    "status",
+    "data",
+    "event_id",
+    "indexes_updated"
+  ],
+  "type": "object"
+}

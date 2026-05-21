@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.new.v1.error",
+  "title": "kernel.ir.new error envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "op", "status", "code", "message", "context"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "op": { "const": "kernel.ir.new" },
+    "status": { "const": "error" },
+    "code": {
+      "type": "string",
+      "enum": [
+        "SCHEMA_INVALID",
+        "ALREADY_EXISTS",
+        "NOT_FOUND",
+        "DEPENDENCY_BROKEN",
+        "INVALID_STATE"
+      ]
+    },
+    "message": { "type": "string" },
+    "context": { "type": "object" }
+  }
+}

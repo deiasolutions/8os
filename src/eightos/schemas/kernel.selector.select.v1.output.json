@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.selector.select.v1.output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "op", "status", "data", "event_id", "indexes_updated"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "op": { "const": "kernel.selector.select" },
+    "status": { "const": "ok" },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selected_resolver_id", "selection_ir_id", "selection_path", "fitness_scores"],
+      "properties": {
+        "selected_resolver_id": { "type": ["string", "null"] },
+        "selection_ir_id": { "type": "string" },
+        "selection_path": { "type": "string" },
+        "fitness_scores": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["resolver_id", "score", "breakdown"],
+            "properties": {
+              "resolver_id": { "type": "string" },
+              "score": { "type": "number" },
+              "breakdown": { "type": "object" }
+            }
+          }
+        },
+        "voi_consultation": {
+          "type": ["object", "null"],
+          "description": "v1.0 §4 / §6.3: present when an active calibration policy caused VOI to be consulted; null otherwise."
+        },
+        "depth_budget": {
+          "type": ["integer", "null"],
+          "description": "v1.0 §5.1: present when the chosen resolver has cost_model: linear-in-depth."
+        },
+        "escalation_purpose": {
+          "type": ["string", "null"],
+          "enum": ["decision", "holdout", "none", null],
+          "description": "v1.0 §6.2: decision|holdout|none. Present on selections involving VOI; null otherwise."
+        }
+      }
+    },
+    "event_id": { "type": "string" },
+    "indexes_updated": { "type": "array", "items": { "type": "string" } }
+  }
+}

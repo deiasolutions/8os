@@ -1,0 +1,82 @@
+{
+  "$id": "kernel.reindex.v1.output",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "indexes_written": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "input_set_hash": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "mode": {
+              "const": "full"
+            }
+          },
+          "required": [
+            "mode",
+            "input_set_hash",
+            "indexes_written"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "drift_detected": {
+              "const": false
+            },
+            "input_set_hash": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "mode": {
+              "const": "check"
+            }
+          },
+          "required": [
+            "mode",
+            "input_set_hash",
+            "drift_detected"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "event_id": {
+      "type": "null"
+    },
+    "indexes_updated": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "op": {
+      "const": "kernel.reindex"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "ok"
+    }
+  },
+  "required": [
+    "schema_version",
+    "op",
+    "status",
+    "data",
+    "event_id",
+    "indexes_updated"
+  ],
+  "title": "kernel.reindex success envelope",
+  "type": "object"
+}

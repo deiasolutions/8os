@@ -1,0 +1,107 @@
+{
+  "$id": "kernel.ir.get.v1.output",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "children": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "collapsed_summary": {
+                    "type": "string"
+                  },
+                  "ir_id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ir_id",
+                  "collapsed_summary"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "frontmatter": {
+          "type": "object"
+        },
+        "intention_text": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ir_id": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "resolution_text": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subgraph": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "tier": {
+          "enum": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      "required": [
+        "ir_id",
+        "path",
+        "tier",
+        "frontmatter"
+      ],
+      "type": "object"
+    },
+    "event_id": {
+      "type": "null"
+    },
+    "indexes_updated": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "op": {
+      "const": "kernel.ir.get"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "ok"
+    }
+  },
+  "required": [
+    "schema_version",
+    "op",
+    "status",
+    "data",
+    "event_id",
+    "indexes_updated"
+  ],
+  "title": "kernel.ir.get success envelope",
+  "type": "object"
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.reindex.v1.output",
+  "title": "kernel.reindex success envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "op", "status", "data", "event_id", "indexes_updated"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "op": { "const": "kernel.reindex" },
+    "status": { "const": "ok" },
+    "data": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "input_set_hash", "indexes_written"],
+          "properties": {
+            "mode": { "const": "rebuild" },
+            "input_set_hash": { "type": "string", "minLength": 1 },
+            "indexes_written": { "type": "integer", "minimum": 0 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "input_set_hash", "drift_detected"],
+          "properties": {
+            "mode": { "const": "check" },
+            "input_set_hash": { "type": "string", "minLength": 1 },
+            "drift_detected": { "const": false }
+          }
+        }
+      ]
+    },
+    "event_id": { "type": ["string", "null"] },
+    "indexes_updated": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.outside.http.v1.input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["direction", "target_category", "target_identifier", "payload", "for_ir_id"],
+  "properties": {
+    "direction": {
+      "enum": ["outbound", "inbound", "bidirectional"],
+      "description": "Outbound: kernel-initiated. Inbound: outside-initiated. Bidirectional: long-lived with traffic both ways."
+    },
+    "target_category": {
+      "enum": ["network"],
+      "description": "Category of the outside target. v1.1 §11 ships with `network` only."
+    },
+    "target_identifier": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identifier kernel does not interpret beyond policy matching and audit (typically a URL)."
+    },
+    "payload": {
+      "description": "Opaque payload body; passed to the outside service. Hashed at queue time (post-classification-transform if applicable)."
+    },
+    "for_ir_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "(I, R) id this outside call is performed for; used for provenance, authority resolution, and tier-3 event linkage."
+    },
+    "authorization_id": {
+      "type": ["string", "null"],
+      "default": null,
+      "description": "Standing authorization (I, R) id permitting the call. Required when policy gates the call."
+    },
+    "priority": {
+      "type": ["integer", "null"],
+      "default": null,
+      "description": "Opaque integer; kernel passes to queue scheduler. Higher integer = higher priority."
+    },
+    "expires_at": {
+      "type": ["string", "null"],
+      "default": null,
+      "description": "ISO8601 timestamp; latest acceptable service time. Kernel drops queued calls with EXPIRES_AT_PASSED if cutoff elapses before service."
+    },
+    "store_payload_sidecar": {
+      "type": ["boolean", "null"],
+      "default": null,
+      "description": "When true (and policy permits), store full request and response payloads under .8os/payloads/<event-id>.{request,response}. Default off; payloads exist only as hashes."
+    }
+  }
+}

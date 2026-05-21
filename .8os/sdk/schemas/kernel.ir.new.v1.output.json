@@ -1,0 +1,62 @@
+{
+  "$id": "kernel.ir.new.v1.output",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "ir_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "tier": {
+          "enum": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      "required": [
+        "ir_id",
+        "path",
+        "tier"
+      ],
+      "type": "object"
+    },
+    "event_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "indexes_updated": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "op": {
+      "const": "kernel.ir.new"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "ok"
+    }
+  },
+  "required": [
+    "schema_version",
+    "op",
+    "status",
+    "data",
+    "event_id",
+    "indexes_updated"
+  ],
+  "title": "kernel.ir.new success envelope",
+  "type": "object"
+}

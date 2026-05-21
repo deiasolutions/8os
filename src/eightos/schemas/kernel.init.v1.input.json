@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.init.v1.input",
+  "title": "kernel.init input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "project_name",
+    "primary_scope_id",
+    "primary_operator_id",
+    "kernel_version"
+  ],
+  "properties": {
+    "project_name": { "type": "string", "minLength": 1 },
+    "primary_scope_id": { "type": "string", "minLength": 1, "pattern": "^[a-z0-9][a-z0-9_-]*$" },
+    "primary_operator_id": { "type": "string", "minLength": 1 },
+    "kernel_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-z0-9.-]+)?$",
+      "description": "MAJOR.MINOR.PATCH optionally followed by a pre-release tag (e.g., 1.0.1-partial, 1.0.2-dev.1)."
+    }
+  }
+}

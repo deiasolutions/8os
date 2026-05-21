@@ -1,0 +1,77 @@
+{
+  "$id": "kernel.ir.new.v1.input",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authored_by": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "authority_level": {
+      "enum": [
+        "hard",
+        "convention",
+        "uncalibrated"
+      ]
+    },
+    "collapsed_summary": {
+      "default": null,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "depends_on": {
+      "default": [],
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "intention_text": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "parent_id": {
+      "default": null,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "projection_types": {
+      "default": [],
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "scope_id": {
+      "pattern": "^[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "slug": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "tier": {
+      "enum": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "required": [
+    "scope_id",
+    "slug",
+    "tier",
+    "intention_text",
+    "authority_level",
+    "authored_by"
+  ],
+  "title": "kernel.ir.new input",
+  "type": "object"
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.get.v1.output",
+  "title": "kernel.ir.get success envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "op", "status", "data", "event_id", "indexes_updated"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "op": { "const": "kernel.ir.get" },
+    "status": { "const": "ok" },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ir_id", "path", "tier", "frontmatter"],
+      "properties": {
+        "ir_id": { "type": "string" },
+        "path": { "type": "string" },
+        "tier": { "enum": [1, 2, 3] },
+        "frontmatter": { "type": "object" },
+        "intention_text": { "type": ["string", "null"] },
+        "resolution_text": { "type": ["string", "null"] },
+        "children": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["ir_id", "collapsed_summary"],
+                "properties": {
+                  "ir_id": { "type": "string" },
+                  "collapsed_summary": { "type": "string" }
+                }
+              }
+            }
+          ]
+        },
+        "subgraph": { "type": ["object", "null"] }
+      }
+    },
+    "event_id": { "type": "null" },
+    "indexes_updated": { "type": "array", "items": { "type": "string" } }
+  }
+}

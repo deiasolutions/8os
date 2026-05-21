@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.supersede.v1.error",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "op", "status", "code", "message", "context"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "op": { "const": "kernel.ir.supersede" },
+    "status": { "const": "error" },
+    "code": { "enum": ["SCHEMA_INVALID", "NOT_FOUND", "INVALID_STATE"] },
+    "message": { "type": "string" },
+    "context": { "type": "object" }
+  }
+}

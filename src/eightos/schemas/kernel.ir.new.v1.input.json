@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.new.v1.input",
+  "title": "kernel.ir.new input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "scope_id",
+    "slug",
+    "tier",
+    "intention_text",
+    "authority_level",
+    "authored_by",
+    "authored_via"
+  ],
+  "properties": {
+    "scope_id": { "type": "string", "pattern": "^[_a-z0-9][a-z0-9_-]*$" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+    "tier": { "enum": [1, 2, 3] },
+    "intention_text": { "type": "string", "minLength": 1 },
+    "projection_types": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "default": []
+    },
+    "parent_id": { "type": ["string", "null"], "default": null },
+    "depends_on": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "default": []
+    },
+    "authority_level": { "enum": ["hard", "convention", "uncalibrated"] },
+    "authored_by": { "type": "string", "minLength": 1 },
+    "authored_via": {
+      "type": "string",
+      "minLength": 1,
+      "description": "v1.0.1-partial Amendment 2: mandatory bridge through which authorship enters the kernel. Required, non-empty. The SDK layer defaults this to 'outside' for non-internal callers; internal kernel ops pass 'kernel.self' explicitly."
+    },
+    "collapsed_summary": { "type": ["string", "null"], "default": null },
+    "frontmatter_extensions": {
+      "type": "object",
+      "default": {},
+      "additionalProperties": true,
+      "description": "Projection-declared frontmatter fields (v0.2 §2.1). The kernel validates these against the union of required_frontmatter declarations from each projection in projection_types."
+    },
+    "stakes": {
+      "type": ["object", "null"],
+      "default": null,
+      "additionalProperties": false,
+      "properties": {
+        "false_positive_cost": { "type": ["object", "null"] },
+        "false_negative_cost": { "type": ["object", "null"] },
+        "reversibility": { "type": ["string", "null"] },
+        "consequence_scope": { "type": ["string", "null"] }
+      },
+      "description": "v1.0 §2.3: optional stakes for an intention. Absent or null renders stakes unknown for VOI; per §3.7 stakes-unknown defaults to escalate-directly. All sub-fields are optional and default to scope's stakes_defaults when missing."
+    },
+    "domain": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "default": null,
+      "description": "v1.1 §4.3: optional domain for the (I, R). Absent (null) falls back to the scope's domain_default. Null at both levels means no domain — domain-scoped calibration policies do not match. Empty string is rejected; use null to omit."
+    },
+    "data_classification": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "default": null,
+      "description": "v1.1 §4.2: application-declared classification of the data this (I, R) carries (Block 4.3). Opaque to the kernel — the application defines its own taxonomy. Absent (null) falls back to the scope's data_classification_default. Null at both levels means no classification — classification-based policies do not match. Empty string is rejected; use null to omit."
+    },
+    "visible_when": {
+      "type": ["object", "null"],
+      "default": null,
+      "description": "v1.1 §4.4 (Block 4.4): structured visibility predicate evaluated at read time. Hard-authority records only; convention- or uncalibrated-authority records carrying this field reject as VISIBILITY_PREDICATE_NOT_PERMITTED. The predicate's structured shape (any/all/not composites + five leaf primitives) is validated by `eightos.predicates.validate_predicate` in the handler — see `src/eightos/schemas/visible_when.predicate.v1.schema.json` for the full predicate shape schema (documentation reference; not $ref'd at the SDK input layer to avoid schema-registry mechanism)."
+    },
+    "supersedes": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "default": null,
+      "description": "v1.1 §3.2 (Block 4.6 / BLOCK-4.5-SPEC-AMENDMENTS Amendment 4 — Path A): optional lineage pointer for supersede-with-replacement of a cancelled (I, R). When non-null, the kernel validates that the target id exists (NOT_FOUND if missing) and that the target's status is `cancelled` (IR_SUPERSEDES_TARGET_NOT_CANCELLED otherwise). The new record is authored at status `open` carrying `supersedes: <target-id>` in its frontmatter; the cancelled target is unchanged (no `superseded_by` written, no transition event). For superseding living records (open/resolved/stale), use kernel.ir.supersede. Empty string is rejected; use null to omit."
+    },
+    "authorization_id": {
+      "type": ["string", "null"],
+      "default": null,
+      "description": "v1.1 §8.4 (Block 4.7): optional authorization (I, R) id presented to override a `defer` policy decision on this op. The kernel checks that the authorization's `authored_by` is a holder of the policy's `defer_to` role. When the override succeeds, the deferred op proceeds; otherwise it rejects with POLICY_REQUIRES_AUTHORIZATION."
+    },
+    "valid_through": {
+      "type": ["string", "null"],
+      "default": null,
+      "description": "v1.1 axiom 4 / §4 (Block 4.8): optional ISO-8601 timestamp at which the (I, R) is treated as expired. Default null (no expiration). Records that observe expiration semantics include `_kernel.lease` (lease expires at this time, treating the lease as released for downstream lease-check purposes) and `_kernel.policy-evaluation` (cache evaluation valid until this timestamp). Empty string is rejected; use null to omit. Block 4.8 lifts this as a top-level input mirroring Block 4.1's `domain` / 4.3's `data_classification` / 4.4's `visible_when` lifts; previously the field was set to null at write time and unsettable except via supersession."
+    }
+  }
+}

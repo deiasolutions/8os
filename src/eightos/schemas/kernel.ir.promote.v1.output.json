@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.promote.v1.output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "op", "status", "data", "event_id", "indexes_updated"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "op": { "const": "kernel.ir.promote" },
+    "status": { "const": "ok" },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["new_ir_id", "new_path", "promoted_from_event", "original_jsonl_marked"],
+      "properties": {
+        "new_ir_id": { "type": "string" },
+        "new_path": { "type": "string" },
+        "promoted_from_event": { "type": "string" },
+        "original_jsonl_marked": { "const": true }
+      }
+    },
+    "event_id": { "type": "string" },
+    "indexes_updated": { "type": "array", "items": { "type": "string" } }
+  }
+}

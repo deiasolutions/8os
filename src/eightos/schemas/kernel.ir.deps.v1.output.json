@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.deps.v1.output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "op", "status", "data", "event_id", "indexes_updated"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "op": { "const": "kernel.ir.deps" },
+    "status": { "const": "ok" },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ir_id", "direction", "depth_reached", "graph", "truncated"],
+      "properties": {
+        "ir_id": { "type": "string" },
+        "direction": { "type": "string" },
+        "depth_reached": { "type": "integer" },
+        "graph": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["ir_id", "depth", "via"],
+            "properties": {
+              "ir_id": { "type": "string" },
+              "depth": { "type": "integer" },
+              "via": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "truncated": { "type": "boolean" }
+      }
+    },
+    "event_id": { "type": "null" },
+    "indexes_updated": { "type": "array", "items": { "type": "string" } }
+  }
+}

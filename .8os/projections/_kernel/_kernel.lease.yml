@@ -1,0 +1,25 @@
+body_shape: free
+filename_suffix: .lease.md
+optional_frontmatter:
+- description: ISO-8601 lease expiration; lease is treated as expired when this elapses
+  name: valid_through
+  type: string|null
+projection_id: _kernel.lease
+required_frontmatter:
+- description: must equal the (I, R)'s id
+  name: lease_id
+  type: string
+- description: scope-id or (I, R) id the lease covers
+  name: lease_for
+  type: string
+- description: factory:<factory-id> | process:<process-id> | author:<author-string>
+  name: held_by
+  type: string
+- description: write|read|exclusive|shared — kernel enforces write and exclusive; read and shared are coordination metadata
+  name: lease_purpose
+  type: string
+- description: ISO-8601 when the lease was acquired
+  name: acquired_at
+  type: string
+spec_reference: docs/spec/8OS-BLOCK-1-SPEC-v1_1.md#7-1-_kernel-lease
+target_subdirectory: _leases

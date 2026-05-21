@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.authorize.v1.input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["bridge_id", "scope_of_authority", "authored_by"],
+  "properties": {
+    "bridge_id": { "type": "string" },
+    "for_ir_id": { "type": ["string", "null"] },
+    "scope_of_authority": { "enum": ["single", "session", "until"] },
+    "valid_through": { "type": ["string", "null"] },
+    "cost_ceiling": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "coin_usd": { "type": ["number", "null"] },
+        "carbon_g": { "type": ["number", "null"] },
+        "clock_ms": { "type": ["number", "null"] }
+      }
+    },
+    "authored_by": { "type": "string" }
+  }
+}

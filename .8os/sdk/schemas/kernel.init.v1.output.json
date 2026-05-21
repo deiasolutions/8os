@@ -1,0 +1,59 @@
+{
+  "$id": "kernel.init.v1.output",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "bootstrap_ir_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "bootstrap_path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "primary_scope_path": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "bootstrap_ir_id",
+        "bootstrap_path",
+        "primary_scope_path"
+      ],
+      "type": "object"
+    },
+    "event_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "indexes_updated": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "op": {
+      "const": "kernel.init"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "ok"
+    }
+  },
+  "required": [
+    "schema_version",
+    "op",
+    "status",
+    "data",
+    "event_id",
+    "indexes_updated"
+  ],
+  "title": "kernel.init success envelope",
+  "type": "object"
+}

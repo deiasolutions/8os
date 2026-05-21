@@ -1,0 +1,64 @@
+{
+  "$id": "kernel.gatekeeper.check.v1.output",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "authorization_used": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "permitted": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "valid_through": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "permitted",
+        "reason",
+        "authorization_used",
+        "valid_through"
+      ],
+      "type": "object"
+    },
+    "event_id": {
+      "type": "null"
+    },
+    "indexes_updated": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "op": {
+      "const": "kernel.gatekeeper.check"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "ok"
+    }
+  },
+  "required": [
+    "schema_version",
+    "op",
+    "status",
+    "data",
+    "event_id",
+    "indexes_updated"
+  ],
+  "type": "object"
+}

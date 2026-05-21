@@ -1,0 +1,63 @@
+{
+  "$id": "kernel.event.get.v1.output",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "type": "string"
+        },
+        "event_record": {
+          "type": "object"
+        },
+        "ir_projection": {
+          "type": "object"
+        },
+        "promoted_to_ir_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "raw_payload": {}
+      },
+      "required": [
+        "event_id",
+        "event_record",
+        "raw_payload",
+        "promoted_to_ir_id",
+        "ir_projection"
+      ],
+      "type": "object"
+    },
+    "event_id": {
+      "type": "null"
+    },
+    "indexes_updated": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "op": {
+      "const": "kernel.event.get"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "ok"
+    }
+  },
+  "required": [
+    "schema_version",
+    "op",
+    "status",
+    "data",
+    "event_id",
+    "indexes_updated"
+  ],
+  "type": "object"
+}

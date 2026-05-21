@@ -1,0 +1,31 @@
+body_shape: free
+filename_suffix: .proposal.md
+optional_frontmatter:
+- description: 'when proposal_status: approved, the (I, R) id of the actual supersession on the target policy'
+  name: effective_supersession
+  type: string|null
+projection_id: _kernel.calibration-policy-proposal
+required_frontmatter:
+- description: must equal the (I, R)'s id
+  name: proposal_id
+  type: string
+- description: calibration-policy id this proposal recommends superseding
+  name: target_policy
+  type: string
+- description: '{<field>: <new-value>, ...}'
+  name: proposed_changes
+  type: object
+- description: '{observation_count, period_start, period_end, observed_calibration_error, ...}'
+  name: evidence_summary
+  type: object
+- description: resolver id of the calibrator that produced the proposal (always kernel.calibrator in v1.0)
+  name: proposed_by
+  type: string
+- description: ISO-8601 when the calibrator authored the proposal
+  name: proposed_on
+  type: string
+- description: pending|approved|rejected|superseded — namespaced per Block 2.7's discipline (v1.0 spec amendment Q1)
+  name: proposal_status
+  type: string
+spec_reference: docs/spec/8OS-BLOCK-1-SPEC-v1.0.md#3-3-_kernel-calibration-policy-proposal
+target_subdirectory: _calibration-proposals

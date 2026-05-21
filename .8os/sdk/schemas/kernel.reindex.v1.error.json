@@ -1,0 +1,40 @@
+{
+  "$id": "kernel.reindex.v1.error",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "enum": [
+        "SCHEMA_INVALID",
+        "INDEX_DRIFT",
+        "INVALID_STATE"
+      ],
+      "type": "string"
+    },
+    "context": {
+      "type": "object"
+    },
+    "message": {
+      "type": "string"
+    },
+    "op": {
+      "const": "kernel.reindex"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "error"
+    }
+  },
+  "required": [
+    "schema_version",
+    "op",
+    "status",
+    "code",
+    "message",
+    "context"
+  ],
+  "title": "kernel.reindex error envelope",
+  "type": "object"
+}

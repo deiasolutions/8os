@@ -1,0 +1,3 @@
+# Force loud merge conflicts on kernel index files — never auto-merge
+.8os/index/*.yml merge=binary
+.8os/index/*.json merge=binary

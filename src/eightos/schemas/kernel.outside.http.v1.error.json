@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.outside.http.v1.error",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "op", "status", "code", "message", "context"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "op": { "const": "kernel.outside.http" },
+    "status": { "const": "error" },
+    "code": {
+      "enum": [
+        "SCHEMA_INVALID",
+        "AUTHORIZATION_REQUIRED",
+        "OUTSIDE_UNREACHABLE",
+        "OUTSIDE_CALL_DENIED",
+        "EVENT_WRITE_FAILED_AFTER_CROSSING",
+        "EXPIRES_AT_PASSED",
+        "BUDGET_EXHAUSTED",
+        "RATE_LIMIT_EXHAUSTED",
+        "PAYLOAD_TOO_LARGE",
+        "CLASSIFICATION_VIOLATION",
+        "POLICY_DENIED",
+        "POLICY_REQUIRES_AUTHORIZATION",
+        "LEASE_HELD",
+        "LEASE_EXPIRED",
+        "IR_CANCELLED",
+        "NOT_FOUND"
+      ]
+    },
+    "message": { "type": "string" },
+    "context": { "type": "object" }
+  }
+}

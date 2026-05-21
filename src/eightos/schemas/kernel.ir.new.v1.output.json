@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.new.v1.output",
+  "title": "kernel.ir.new success envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "op", "status", "data", "event_id", "indexes_updated"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "op": { "const": "kernel.ir.new" },
+    "status": { "const": "ok" },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ir_id", "path", "tier"],
+      "properties": {
+        "ir_id": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "tier": { "enum": [1, 2, 3] },
+        "calibrator_dispatch": {
+          "type": ["object", "null"],
+          "description": "v1.0 §3.4: present when the authored (I, R) was a calibration-policy-proposal that matched a standing authorization and triggered an auto-dispatched approval supersession + policy supersession."
+        }
+      }
+    },
+    "event_id": { "type": "string", "minLength": 1 },
+    "indexes_updated": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

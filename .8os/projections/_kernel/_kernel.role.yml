@@ -1,0 +1,16 @@
+body_shape: free
+filename_suffix: .role.md
+optional_frontmatter: []
+projection_id: _kernel.role
+required_frontmatter:
+- description: must equal the (I, R)'s id
+  name: role_id
+  type: string
+- description: non-empty list of permission-tag strings the role confers
+  name: grants
+  type: array
+- description: list of author strings holding the role; may be empty (an unfilled role)
+  name: holders
+  type: array
+spec_reference: docs/spec/8OS-BLOCK-1-SPEC-v1_1.md#7-2-_kernel-role
+target_subdirectory: _roles

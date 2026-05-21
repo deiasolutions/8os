@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "eightos"
+version = "1.2.0"
+description = "8OS — kernel of an intention-driven OS for software product development"
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Q88N" }]
+dependencies = [
+    "jsonschema>=4.26.0",
+    "python-ulid>=3.1.0",
+    "pyyaml>=6.0.3",
+    "typing-extensions>=4.15.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "pytest-cov>=5.0",
+  "ruff>=0.6",
+]
+
+[project.scripts]
+"8os" = "eightos.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/eightos"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"

@@ -1,0 +1,39 @@
+{
+  "$id": "kernel.ir.collapse.v1.error",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "enum": [
+        "SCHEMA_INVALID",
+        "INVALID_STATE",
+        "NOT_FOUND",
+        "ALREADY_EXISTS"
+      ]
+    },
+    "context": {
+      "type": "object"
+    },
+    "message": {
+      "type": "string"
+    },
+    "op": {
+      "const": "kernel.ir.collapse"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "error"
+    }
+  },
+  "required": [
+    "schema_version",
+    "op",
+    "status",
+    "code",
+    "message",
+    "context"
+  ],
+  "type": "object"
+}

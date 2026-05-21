@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.list.v1.error",
+  "title": "kernel.ir.list error envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "op", "status", "code", "message", "context"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "op": { "const": "kernel.ir.list" },
+    "status": { "const": "error" },
+    "code": {
+      "type": "string",
+      "enum": ["SCHEMA_INVALID", "INVALID_STATE"]
+    },
+    "message": { "type": "string" },
+    "context": { "type": "object" }
+  }
+}

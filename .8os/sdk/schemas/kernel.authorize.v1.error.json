@@ -1,0 +1,38 @@
+{
+  "$id": "kernel.authorize.v1.error",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "enum": [
+        "SCHEMA_INVALID",
+        "AUTHORITY_INSUFFICIENT",
+        "NOT_FOUND"
+      ]
+    },
+    "context": {
+      "type": "object"
+    },
+    "message": {
+      "type": "string"
+    },
+    "op": {
+      "const": "kernel.authorize"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "error"
+    }
+  },
+  "required": [
+    "schema_version",
+    "op",
+    "status",
+    "code",
+    "message",
+    "context"
+  ],
+  "type": "object"
+}

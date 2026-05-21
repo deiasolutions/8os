@@ -1,0 +1,37 @@
+body_shape: free
+filename_suffix: .policy.md
+optional_frontmatter:
+- description: optional domain restriction within the scope
+  name: applies_to_domain
+  type: string|null
+- description: 'candidate ground-truth resolver; required when calibration_signal: ground_truth'
+  name: ground_truth_resolver
+  type: string|null
+- description: '{kind: peer-agreement|supersession-rate|outcome-correlation|holdout-against-ensemble, params}; required when calibration_signal: proxy'
+  name: proxy_specification
+  type: object
+- description: ISO-8601 duration; how long to wait for actuals before falling back to proxy
+  name: ground_truth_timeout
+  type: string|null
+projection_id: _kernel.calibration-policy
+required_frontmatter:
+- description: must equal the (I, R)'s id
+  name: policy_id
+  type: string
+- description: scope this policy governs
+  name: applies_to_scope
+  type: string
+- description: resolver id of the predictor being calibrated
+  name: predictor
+  type: string
+- description: ground_truth|proxy
+  name: calibration_signal
+  type: string
+- description: 0–1 fraction of decisions sampled for calibration evidence
+  name: holdout_rate
+  type: number
+- description: '{kind: count|time|drift-threshold, params: {...}}'
+  name: recalibration_trigger
+  type: object
+spec_reference: docs/spec/8OS-BLOCK-1-SPEC-v1.0.md#3-2-_kernel-calibration-policy
+target_subdirectory: _calibration-policies

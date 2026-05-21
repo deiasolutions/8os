@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.promote.v1.input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "to_tier", "target_scope", "target_slug", "authored_by", "authority_level"],
+  "properties": {
+    "event_id": { "type": "string" },
+    "to_tier": { "enum": [1, 2] },
+    "target_scope": { "type": "string" },
+    "target_slug": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+    "authored_by": { "type": "string" },
+    "authority_level": { "enum": ["hard", "convention", "uncalibrated"] }
+  }
+}

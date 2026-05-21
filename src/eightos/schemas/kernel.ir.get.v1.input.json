@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.get.v1.input",
+  "title": "kernel.ir.get input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ir_id"],
+  "properties": {
+    "ir_id": { "type": "string", "minLength": 1 },
+    "view": { "enum": ["collapsed", "expanded", "full"], "default": "collapsed" },
+    "include_body": { "type": "boolean", "default": true }
+  }
+}

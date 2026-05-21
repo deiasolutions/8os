@@ -1,0 +1,28 @@
+{
+  "$id": "kernel.ir.supersede.v1.input",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authored_by": {
+      "type": "string"
+    },
+    "new_intention_text": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "old_ir_id": {
+      "type": "string"
+    },
+    "reason": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "old_ir_id",
+    "new_intention_text",
+    "authored_by",
+    "reason"
+  ],
+  "type": "object"
+}

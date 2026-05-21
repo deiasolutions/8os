@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.bridge.cross.v1.output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "op", "status", "data", "event_id", "indexes_updated"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "op": { "const": "kernel.bridge.cross" },
+    "status": { "const": "ok" },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["response", "cost_actual", "raw_payload_ref"],
+      "properties": {
+        "response": {},
+        "cost_actual": { "type": "object" },
+        "raw_payload_ref": { "type": ["string", "null"] }
+      }
+    },
+    "event_id": { "type": "string" },
+    "indexes_updated": { "type": "array", "items": { "type": "string" } }
+  }
+}

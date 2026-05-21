@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.cancel.v1.input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ir_id", "cancelled_by", "authored_via"],
+  "properties": {
+    "ir_id": { "type": "string", "minLength": 1 },
+    "cancelled_by": { "type": "string", "minLength": 1 },
+    "reason": { "type": ["string", "null"], "default": null },
+    "cascade": { "type": "boolean", "default": true },
+    "authored_via": { "type": "string", "minLength": 1 },
+    "authorization_id": {
+      "type": ["string", "null"],
+      "default": null,
+      "description": "v1.1 §8.4 (Block 4.7): optional authorization (I, R) id presented to override a `defer` policy decision. The kernel checks that the authorization's `authored_by` is a holder of the policy's `defer_to` role. When the override succeeds, the deferred op proceeds; otherwise the op rejects with POLICY_REQUIRES_AUTHORIZATION."
+    }
+  }
+}

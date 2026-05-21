@@ -1,0 +1,33 @@
+body_shape: free
+filename_suffix: .md
+optional_frontmatter:
+- description: for LLM resolvers, the model id
+  name: model_name
+  type: string|null
+- description: 'fixed|linear-in-depth; default fixed when absent (v1.0 §2.1). cost_model: piecewise is reserved but rejected at registration.'
+  name: cost_model
+  type: string
+- description: '{clock_ms, coin_usd, carbon_g} — required when cost_model: linear-in-depth, ignored otherwise (v1.0 §2.1)'
+  name: cost_per_depth_unit
+  type: object
+- description: '{shallow, medium, deep: <integer>} — coarse grid the selector picks from when cost_model: linear-in-depth (v1.0 §5.1)'
+  name: depth_grid
+  type: object
+projection_id: _kernel.resolver
+required_frontmatter:
+- description: must equal the (I, R)'s id
+  name: resolver_id
+  type: string
+- description: human-readable name
+  name: display_name
+  type: string
+- description: bridge id, or null for inside resolvers
+  name: bridge
+  type: string|null
+- description: '{clock_ms, coin_usd, carbon_g, currency}'
+  name: cost
+  type: object
+- description: '{<domain>: {sigma, pi, alpha, rho}}'
+  name: capability
+  type: object
+spec_reference: docs/spec/8OS-BLOCK-1-SPEC.md#3-3-_kernel-resolver

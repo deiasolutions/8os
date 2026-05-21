@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.expand.v1.output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "op", "status", "data", "event_id", "indexes_updated"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "op": { "const": "kernel.ir.expand" },
+    "status": { "const": "ok" },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ir_id", "old_path", "new_path"],
+      "properties": {
+        "ir_id": { "type": "string" },
+        "old_path": { "type": "string" },
+        "new_path": { "type": "string" }
+      }
+    },
+    "event_id": { "type": "string" },
+    "indexes_updated": { "type": "array", "items": { "type": "string" } }
+  }
+}

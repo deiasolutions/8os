@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.gatekeeper.check.v1.input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["bridge_id", "resolver_id", "for_ir_id"],
+  "properties": {
+    "bridge_id": { "type": "string" },
+    "resolver_id": { "type": "string" },
+    "for_ir_id": { "type": "string" },
+    "authorization_id": { "type": ["string", "null"] }
+  }
+}

@@ -1,0 +1,9 @@
+body_shape: free
+filename_suffix: .md
+optional_frontmatter: []
+projection_id: _kernel.resolver-selection
+required_frontmatter:
+- description: '{for_ir, domain, demands, selected_resolver_id, fitness_scores}'
+  name: selection
+  type: object
+spec_reference: docs/spec/8OS-BLOCK-1-SPEC.md#3-6-3-_kernel-resolver-selection

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.collapse.v1.input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ir_id"],
+  "properties": { "ir_id": { "type": "string" } }
+}

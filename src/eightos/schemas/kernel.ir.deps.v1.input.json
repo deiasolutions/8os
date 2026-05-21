@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.deps.v1.input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ir_id"],
+  "properties": {
+    "ir_id": { "type": "string" },
+    "direction": { "enum": ["forward", "reverse", "both"], "default": "forward" },
+    "max_depth": { "type": "integer", "minimum": 0, "maximum": 100, "default": 5 },
+    "tier_filter": { "type": ["array", "null"], "items": { "enum": [1, 2, 3] }, "default": null }
+  }
+}

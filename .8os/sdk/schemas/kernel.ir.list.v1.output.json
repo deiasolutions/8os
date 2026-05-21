@@ -1,0 +1,89 @@
+{
+  "$id": "kernel.ir.list.v1.output",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "results": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "collapsed_summary": {
+                "type": "string"
+              },
+              "ir_id": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "tier": {
+                "enum": [
+                  1,
+                  2,
+                  3
+                ]
+              }
+            },
+            "required": [
+              "ir_id",
+              "path",
+              "tier",
+              "collapsed_summary",
+              "status"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "returned": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "total_matching": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "results",
+        "total_matching",
+        "returned"
+      ],
+      "type": "object"
+    },
+    "event_id": {
+      "type": "null"
+    },
+    "indexes_updated": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "op": {
+      "const": "kernel.ir.list"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "ok"
+    }
+  },
+  "required": [
+    "schema_version",
+    "op",
+    "status",
+    "data",
+    "event_id",
+    "indexes_updated"
+  ],
+  "title": "kernel.ir.list success envelope",
+  "type": "object"
+}

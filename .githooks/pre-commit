@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# 8OS public/private discipline: hard-block leak vectors at commit time.
+#
+# Wire this hook into a fresh clone with:
+#   git config core.hooksPath .githooks
+#
+# What this blocks:
+#   1. Anything under private/ ever being staged.
+#   2. Filenames under docs/ that match common working-voice patterns
+#      (audit-, plan-, recon-, build-state-, internal-, inbox-, working-,
+#      note-, lineage-, draft-, session-). Those belong in private/.
+
+set -euo pipefail
+
+staged=$(git diff --cached --name-only --diff-filter=AM)
+[ -z "$staged" ] && exit 0
+
+leak_private=$(echo "$staged" | grep -E '^private/' || true)
+if [ -n "$leak_private" ]; then
+  echo "ERROR: refusing to commit files under private/:"
+  echo "$leak_private" | sed 's/^/  /'
+  echo ""
+  echo "private/ is gitignored by design. If you actually want this content"
+  echo "public, move it under docs/ (or wherever it semantically belongs)"
+  echo "and stage from there."
+  exit 1
+fi
+
+leak_docs=$(echo "$staged" | grep -E '^docs/.*(audit|plan|recon|build-state|internal|inbox|working|lineage|session)' | grep -vE '^docs/spec/' || true)
+if [ -n "$leak_docs" ]; then
+  echo "ERROR: working-doc patterns under docs/:"
+  echo "$leak_docs" | sed 's/^/  /'
+  echo ""
+  echo "These filenames suggest internal working content. Public docs/ is"
+  echo "for specs, overviews, articles, demos, open-questions only."
+  echo "Move to private/<appropriate-subdir>/ instead."
+  echo ""
+  echo "If this is a false positive, name the file differently or extend"
+  echo "the allowlist in .githooks/pre-commit."
+  exit 1
+fi
+
+exit 0

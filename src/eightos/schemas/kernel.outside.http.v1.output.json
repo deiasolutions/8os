@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.outside.http.v1.output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "op", "status", "data", "event_id", "indexes_updated"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "op": { "const": "kernel.outside.http" },
+    "status": { "const": "ok" },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "response",
+        "payload_hash",
+        "response_hash",
+        "cost_actual",
+        "queue_time_ms",
+        "serve_time_ms",
+        "sidecar_path",
+        "tier3_event_id"
+      ],
+      "properties": {
+        "response": {
+          "description": "Opaque response body from the outside service."
+        },
+        "payload_hash": {
+          "type": "string",
+          "minLength": 1,
+          "description": "SHA-256 hex of the request payload as sent. When a classification transform applies, the hash is computed post-transform — cache hits require the same transform on lookup."
+        },
+        "response_hash": {
+          "type": "string",
+          "minLength": 1,
+          "description": "SHA-256 hex of the response payload as received."
+        },
+        "cost_actual": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["resolver_cost", "kernel_cost", "factory_cost"],
+          "description": "Three-vector cost decomposition per v1.1 §6. resolver_cost = outside service cost. kernel_cost = queue management + event emission. factory_cost = factory's adapter/retry contribution.",
+          "properties": {
+            "resolver_cost": { "type": "object" },
+            "kernel_cost": { "type": "object" },
+            "factory_cost": { "type": "object" }
+          }
+        },
+        "queue_time_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "serve_time_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "sidecar_path": {
+          "type": ["string", "null"]
+        },
+        "tier3_event_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "event_id": { "type": ["string", "null"] },
+    "indexes_updated": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

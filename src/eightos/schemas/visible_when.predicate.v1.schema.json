@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "visible_when.predicate.v1",
+  "title": "visible_when predicate (v1.1 §4.4)",
+  "description": "Structured visibility predicate evaluated by the kernel at read time. Composite operators (any/all/not) compose freely; leaf predicates check caller context. `not: [a, b]` means none-of-array — true when every member evaluates false. Multiple top-level operators on the same predicate compose via implicit AND.",
+  "$ref": "#/$defs/predicate",
+  "$defs": {
+    "predicate": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "any": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/leafOrPredicate" }
+        },
+        "all": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/leafOrPredicate" }
+        },
+        "not": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/leafOrPredicate" }
+        }
+      }
+    },
+    "leafOrPredicate": {
+      "oneOf": [
+        { "$ref": "#/$defs/leaf" },
+        { "$ref": "#/$defs/predicate" }
+      ]
+    },
+    "leaf": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "maxProperties": 1,
+      "properties": {
+        "role": { "type": "string", "minLength": 1 },
+        "authority_level": { "enum": ["uncalibrated", "convention", "hard"] },
+        "scope": { "type": "string", "minLength": 1 },
+        "caller": { "type": "string", "minLength": 1 },
+        "data_classification_at_most": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

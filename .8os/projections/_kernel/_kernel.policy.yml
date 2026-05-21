@@ -1,0 +1,34 @@
+body_shape: free
+filename_suffix: .policy.md
+optional_frontmatter:
+- description: scope restriction; null means all scopes
+  name: applies_to_scope
+  type: string|null
+- description: classification restriction; null means all classifications
+  name: applies_to_classification
+  type: string|null
+- description: 'modification applied to op input/output when decision: transform'
+  name: transform_action
+  type: any
+- description: 'role id authorized to override when decision: defer'
+  name: defer_to
+  type: string|null
+- description: 'action queued after permitting the op when decision: follow-up'
+  name: follow_up_action
+  type: any
+projection_id: _kernel.policy
+required_frontmatter:
+- description: must equal the (I, R)'s id
+  name: policy_id
+  type: string
+- description: list of kernel operation names this policy gates
+  name: applies_to_op
+  type: array
+- description: inline predicate object (any/all/not over leaves) OR resolver id string
+  name: condition
+  type: any
+- description: allow|deny|transform|defer|follow-up — what the policy enacts when its condition matches
+  name: decision
+  type: string
+spec_reference: docs/spec/8OS-BLOCK-1-SPEC-v1_1.md#7-3-_kernel-policy
+target_subdirectory: _policies

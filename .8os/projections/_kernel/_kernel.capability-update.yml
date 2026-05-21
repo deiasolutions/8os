@@ -1,0 +1,9 @@
+body_shape: free
+filename_suffix: .md
+optional_frontmatter: []
+projection_id: _kernel.capability-update
+required_frontmatter:
+- description: '{resolver_id, previous, updated, corpus_summary}; v1.0 §3.5: previous and updated may carry cost-vector fields alongside σ/π/α/ρ'
+  name: capability_update
+  type: object
+spec_reference: docs/spec/8OS-BLOCK-1-SPEC.md#3-6-4-_kernel-capability-update

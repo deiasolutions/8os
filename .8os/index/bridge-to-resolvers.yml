@@ -1,0 +1,7 @@
+anthropic:
+- generate-briefing
+- prism-ir-decomposer
+- prism-ir-recomposer
+- score-relevance
+human-q88n: []
+kernel.self: []

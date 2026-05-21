@@ -1,0 +1,15 @@
+body_shape: free
+filename_suffix: .md
+optional_frontmatter:
+- description: reference to the body schema YAML
+  name: body_schema_ref
+  type: string
+projection_id: _kernel.projection
+required_frontmatter:
+- description: must equal the (I, R)'s id
+  name: projection_id
+  type: string
+- description: human-readable name
+  name: display_name
+  type: string
+spec_reference: docs/spec/8OS-BLOCK-1-SPEC.md#3-2-_kernel-projection

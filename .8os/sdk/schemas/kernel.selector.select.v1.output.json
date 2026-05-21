@@ -1,0 +1,81 @@
+{
+  "$id": "kernel.selector.select.v1.output",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "fitness_scores": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "breakdown": {
+                "type": "object"
+              },
+              "resolver_id": {
+                "type": "string"
+              },
+              "score": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "resolver_id",
+              "score",
+              "breakdown"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "selected_resolver_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "selection_ir_id": {
+          "type": "string"
+        },
+        "selection_path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "selected_resolver_id",
+        "selection_ir_id",
+        "selection_path",
+        "fitness_scores"
+      ],
+      "type": "object"
+    },
+    "event_id": {
+      "type": "string"
+    },
+    "indexes_updated": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "op": {
+      "const": "kernel.selector.select"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "ok"
+    }
+  },
+  "required": [
+    "schema_version",
+    "op",
+    "status",
+    "data",
+    "event_id",
+    "indexes_updated"
+  ],
+  "type": "object"
+}

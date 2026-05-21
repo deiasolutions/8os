@@ -1,0 +1,91 @@
+{
+  "$id": "kernel.ir.list.v1.input",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authored_by": {
+      "default": null,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "authority_level": {
+      "default": null,
+      "items": {
+        "enum": [
+          "hard",
+          "convention",
+          "uncalibrated"
+        ]
+      },
+      "type": [
+        "array",
+        "null"
+      ]
+    },
+    "limit": {
+      "default": 50,
+      "maximum": 10000,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "offset": {
+      "default": 0,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "projection_type": {
+      "default": null,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "scope_id": {
+      "default": null,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "default": null,
+      "items": {
+        "enum": [
+          "open",
+          "resolved",
+          "superseded",
+          "stale"
+        ]
+      },
+      "type": [
+        "array",
+        "null"
+      ]
+    },
+    "tier": {
+      "default": null,
+      "items": {
+        "enum": [
+          1,
+          2,
+          3
+        ]
+      },
+      "type": [
+        "array",
+        "null"
+      ]
+    },
+    "valid_at": {
+      "default": null,
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "title": "kernel.ir.list input",
+  "type": "object"
+}

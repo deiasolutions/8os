@@ -1,0 +1,86 @@
+{
+  "$id": "kernel.ir.resolve.v1.input",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorization_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "bridge_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "cost_actual": {
+      "additionalProperties": false,
+      "properties": {
+        "carbon_g": {
+          "type": "number"
+        },
+        "clock_ms": {
+          "type": "number"
+        },
+        "coin_usd": {
+          "type": "number"
+        },
+        "model_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tokens_in": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "tokens_out": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "clock_ms",
+        "coin_usd",
+        "carbon_g"
+      ],
+      "type": "object"
+    },
+    "ir_id": {
+      "type": "string"
+    },
+    "resolution_text": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "resolver_id": {
+      "type": "string"
+    },
+    "revalidate_trigger": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "valid_through": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "ir_id",
+    "resolver_id",
+    "resolution_text",
+    "cost_actual"
+  ],
+  "type": "object"
+}

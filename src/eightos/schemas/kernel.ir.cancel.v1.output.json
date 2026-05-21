@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.ir.cancel.v1.output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "op", "status", "data", "event_id", "indexes_updated"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "op": { "const": "kernel.ir.cancel" },
+    "status": { "const": "ok" },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ir_id",
+        "ir_status_after",
+        "affected_dependents",
+        "dropped_pending_ops",
+        "cancellation_event_id"
+      ],
+      "properties": {
+        "ir_id": { "type": "string" },
+        "ir_status_after": { "const": "cancelled" },
+        "affected_dependents": { "type": "integer", "minimum": 0 },
+        "dropped_pending_ops": { "type": "integer", "minimum": 0 },
+        "cancellation_event_id": { "type": "string" }
+      }
+    },
+    "event_id": { "type": "string" },
+    "indexes_updated": { "type": "array", "items": { "type": "string" } }
+  }
+}

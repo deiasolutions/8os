@@ -1,0 +1,27 @@
+body_shape: free
+filename_suffix: .md
+optional_frontmatter:
+- description: human-readable name
+  name: display_name
+  type: string
+- description: '{false_positive_cost, false_negative_cost, reversibility, consequence_scope} — default stakes for intentions in this scope (v1.0 §2.2)'
+  name: stakes_defaults
+  type: object
+- description: default domain for (I, R)s in this scope; record-level domain overrides (v1.1 §4.3)
+  name: domain_default
+  type: string
+- description: default data_classification for (I, R)s in this scope; record-level data_classification overrides (v1.1 §4.2, Block 4.3)
+  name: data_classification_default
+  type: string
+projection_id: _kernel.scope
+required_frontmatter:
+- description: parent in the scope hierarchy
+  name: parent_scope
+  type: string|null
+- description: default authority attribution per level
+  name: authority_defaults
+  type: object
+- description: default visible_to for (I, R)s in this scope
+  name: visibility_defaults
+  type: array
+spec_reference: docs/spec/8OS-BLOCK-1-SPEC.md#3-1-_kernel-scope

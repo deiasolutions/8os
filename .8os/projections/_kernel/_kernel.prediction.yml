@@ -1,0 +1,22 @@
+body_shape: free
+filename_suffix: .prediction.md
+optional_frontmatter:
+- description: optional reference to a more-specific _kernel.capability-update overriding the predictor's general calibration
+  name: predictor_calibration
+  type: string|null
+projection_id: _kernel.prediction
+required_frontmatter:
+- description: the intention (I, R) being predicted about
+  name: subject_intention
+  type: string
+- description: the predictor's claim about how the intention resolves
+  name: predicted_resolution
+  type: any
+- description: predictor's reported confidence 0–1; null for uncalibrated predictors
+  name: probability
+  type: number|null
+- description: resolver id of the predictor that produced this prediction
+  name: predictor
+  type: string
+spec_reference: docs/spec/8OS-BLOCK-1-SPEC-v1.0.md#3-1-_kernel-prediction
+target_subdirectory: _predictions

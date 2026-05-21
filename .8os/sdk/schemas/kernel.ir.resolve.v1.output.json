@@ -1,0 +1,65 @@
+{
+  "$id": "kernel.ir.resolve.v1.output",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "additionalProperties": false,
+      "properties": {
+        "ir_id": {
+          "type": "string"
+        },
+        "ir_status": {
+          "const": "resolved"
+        },
+        "resolution_event_id": {
+          "type": "string"
+        },
+        "resolved_at": {
+          "type": "string"
+        },
+        "valid_through": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "ir_id",
+        "ir_status",
+        "resolved_at",
+        "valid_through",
+        "resolution_event_id"
+      ],
+      "type": "object"
+    },
+    "event_id": {
+      "type": "string"
+    },
+    "indexes_updated": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "op": {
+      "const": "kernel.ir.resolve"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "ok"
+    }
+  },
+  "required": [
+    "schema_version",
+    "op",
+    "status",
+    "data",
+    "event_id",
+    "indexes_updated"
+  ],
+  "type": "object"
+}

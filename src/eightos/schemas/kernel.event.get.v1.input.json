@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.event.get.v1.input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id"],
+  "properties": {
+    "event_id": { "type": "string" },
+    "include_raw_payload": { "type": "boolean", "default": false }
+  }
+}

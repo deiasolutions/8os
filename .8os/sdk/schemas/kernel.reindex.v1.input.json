@@ -1,0 +1,18 @@
+{
+  "$id": "kernel.reindex.v1.input",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "mode": {
+      "enum": [
+        "full",
+        "check"
+      ]
+    }
+  },
+  "required": [
+    "mode"
+  ],
+  "title": "kernel.reindex input",
+  "type": "object"
+}

@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+
+# Build artifacts
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Test / coverage
+.pytest_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+.claude/settings.local.json
+
+# uv
+uv.lock.bak
+
+# Private — never committed. Working notes, plans, audits, build-state,
+# drafting lineage, reports, session inbox, day-to-day journals.
+private/
+
+# Note: do NOT ignore .8os/ — indexes are committed per regeneration discipline γ.

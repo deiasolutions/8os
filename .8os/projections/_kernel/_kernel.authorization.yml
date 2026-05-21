@@ -1,0 +1,18 @@
+body_shape: free
+filename_suffix: .md
+optional_frontmatter:
+- description: '{bridge, for_ir, scope_of_authority, cost_ceiling} — present for bridge-cross authorizations (v0.2 shape)'
+  name: authorizes
+  type: object
+- description: bridge-cross|supersede-calibration-policy; default bridge-cross when absent (v1.0 §3.4 / Block 2.8 amendment)
+  name: authorized_action
+  type: string
+- description: '<ir-id> or [<ir-id>, ...] — required when authorized_action: supersede-calibration-policy'
+  name: authorized_subject
+  type: any
+- description: list of condition predicates the standing authorization checks against incoming proposals; absent for bridge-cross
+  name: conditions
+  type: array
+projection_id: _kernel.authorization
+required_frontmatter: []
+spec_reference: docs/spec/8OS-BLOCK-1-SPEC-v1.0.md#3-4-standing-authorizations

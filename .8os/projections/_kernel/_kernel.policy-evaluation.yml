@@ -1,0 +1,30 @@
+body_shape: free
+filename_suffix: .md
+optional_frontmatter:
+- description: accumulated transform actions
+  name: transform_actions
+  type: array
+- description: accumulated follow-up actions
+  name: follow_up_actions
+  type: array
+- description: 'deferred-to role when decision: defer'
+  name: defer_to_role
+  type: string|null
+projection_id: _kernel.policy-evaluation
+required_frontmatter:
+- description: must equal the (I, R)'s id
+  name: evaluation_id
+  type: string
+- description: hash of op_name + canonical op input + canonical caller context (Block 4.7 Q-NEW-4)
+  name: op_signature
+  type: string
+- description: list of policy ids that were evaluated, in author order
+  name: policies_consulted
+  type: array
+- description: 'combined decision: allow|deny|transform|defer|follow-up'
+  name: decision
+  type: string
+- description: ISO-8601 when the evaluation occurred
+  name: evaluated_at
+  type: string
+spec_reference: docs/spec/8OS-BLOCK-1-SPEC-v1_1.md#7-4-_kernel-policy-evaluation

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kernel.selector.select.v1.input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["for_ir_id", "domain"],
+  "properties": {
+    "for_ir_id": { "type": "string" },
+    "domain": { "type": "string" },
+    "demands": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "min_sigma": { "type": ["number", "null"] },
+        "min_pi": { "type": ["number", "null"] },
+        "min_alpha": { "type": ["number", "null"] },
+        "min_rho": { "type": ["number", "null"] },
+        "max_clock_ms": { "type": ["number", "null"] },
+        "max_coin_usd": { "type": ["number", "null"] },
+        "max_carbon_g": { "type": ["number", "null"] }
+      }
+    },
+    "candidate_resolver_ids": { "type": ["array", "null"], "items": { "type": "string" } }
+  }
+}
