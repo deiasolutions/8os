@@ -4,10 +4,10 @@ The kernel of an intention-driven runtime. Every decision is an (Intention, Reso
 
 ## Status
 
-- Kernel ABI locked at v0.1 (eight axioms).
-- Active spec: v1.1 — seventeen-operation SDK contract.
-- Binary: `v1.1.0-dev.8`. Tier A complete; tier B sequenced; surrogate work on its own track (see overview §14 for the order).
-- Tests: 377 passing + 2 skipped.
+- Kernel spec **v0.2** — nine axioms (axiom 0 + 1–8); axiom 8 (Reflexivity) ratified in Block 5.0 (2026-05-03).
+- Active representation spec: **Block-1 v1.2** — seventeen-operation SDK contract.
+- Binary: **`v1.2.0`**. Tier A complete; tier B sequenced; surrogate work on its own track (see overview §14 for the order).
+- Tests: 444 passing + 2 skipped (editable-install first — see Install).
 
 ## Documents
 
@@ -15,12 +15,12 @@ The kernel of an intention-driven runtime. Every decision is an (Intention, Reso
 |---|---|
 | [`docs/8OS-OVERVIEW-v3.md`](docs/8OS-OVERVIEW-v3.md) | Canonical overview. Start here. |
 | [`docs/8OS-AXIOMS-PLAIN-LANGUAGE.md`](docs/8OS-AXIOMS-PLAIN-LANGUAGE.md) | Plain-English register and glossary. The vocabulary doorway. |
-| [`docs/spec/8OS-KERNEL-SPEC-v0.1.md`](docs/spec/8OS-KERNEL-SPEC-v0.1.md) | Eight-axiom kernel ABI. Locked. |
-| [`docs/spec/8OS-BLOCK-1-SPEC-v1_1.md`](docs/spec/8OS-BLOCK-1-SPEC-v1_1.md) | Active on-disk representation and SDK contract. |
+| [`docs/spec/8OS-KERNEL-SPEC-v0.2.md`](docs/spec/8OS-KERNEL-SPEC-v0.2.md) | Active nine-axiom kernel spec (axiom 0 + 1–8). v0.1 preserved for lineage. |
+| [`docs/spec/8OS-BLOCK-1-SPEC-v1_2.md`](docs/spec/8OS-BLOCK-1-SPEC-v1_2.md) | Active on-disk representation and SDK contract. v1.1 preserved for lineage. |
 | [`docs/spec/PRISM-IR-SPEC-v1.1.md`](docs/spec/PRISM-IR-SPEC-v1.1.md) | The projection language spec. Canonical home is at [`deiasolutions/prism-ir`](https://github.com/deiasolutions/prism-ir); co-resident here for build reference. |
 | [`docs/spec/8OS-SDK-REFERENCE-v1.md`](docs/spec/8OS-SDK-REFERENCE-v1.md) | Index of the SDK operations and which canonical spec defines each. |
 
-Earlier representation specs and patch files are preserved on disk for lineage; v1.1 is the active text.
+Earlier representation specs and patch files are preserved on disk for lineage; v1.2 is the active text.
 
 ## Demos
 
@@ -54,6 +54,10 @@ uv run pytest
 8OS development proceeds in numbered blocks (`Block N.M`) against the v1.1 spec. Open questions and gaps are logged in [`docs/open-questions.md`](docs/open-questions.md).
 
 For changes of any size: surface design before implementation. Locked decisions live in the spec, not in code. The (I, R) discipline applies to the project itself — every change is a resolution to an intention, and the intention should be authored before the resolution.
+
+## Author
+
+Q88N — [GitHub @daaaave-atx](https://github.com/daaaave-atx) · [LinkedIn](https://www.linkedin.com/in/daaaave-atx)
 
 ## License
 
