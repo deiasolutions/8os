@@ -10,6 +10,8 @@ authored_on: 2026-04-26
 revisit_when: 8OS kernel ABI changes in a way that affects projection contracts, or a domain need surfaces that requires breaking changes (which would be v2.0.0, not v1.2)
 ---
 
+> **Naming — read first.** PRISM-IR was **formerly named PHASE-IR**. They are one evolving lineage (PHASE-IR → PRISM-IR v1.0 → v1.1 → v1.2 → v2.0), **not two IRs**. The **runner** is the `simdecisions/simdecisions/phase_ir/` module, executed by the DES — so "PRISM-IR has no runner" is false. The `phase_ir/` directory name is the lingering old name. This confusion recurs and wastes cycles; please don't repeat it.
+
 # PRISM-IR Specification v1.1
 
 **PRISM** = Process Representation, Intent Simulation & Manifestation
