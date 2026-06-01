@@ -60,13 +60,13 @@ def cross(payload: dict[str, Any]) -> dict[str, Any]:
     if not bridge_path.exists():
         raise KernelError(
             NOT_FOUND,
-            f"bridge {bid!r} not registered (no {bridge_path.relative_to(repo)})",
+            f"bridge {bid!r} not registered (no {bridge_path.relative_to(repo).as_posix()})",
         )
     resolver_path = kernel_record_path(repo, "resolver", rid)
     if not resolver_path.exists():
         raise KernelError(
             NOT_FOUND,
-            f"resolver {rid!r} not registered (no {resolver_path.relative_to(repo)})",
+            f"resolver {rid!r} not registered (no {resolver_path.relative_to(repo).as_posix()})",
         )
 
     bridge_fm = parse_file(bridge_path).frontmatter
@@ -148,7 +148,7 @@ def cross(payload: dict[str, Any]) -> dict[str, Any]:
     raw_path: str | None = None
     if user_payload is not None:
         p = write_raw_payload(repo, event["event_id"], user_payload)
-        raw_path = str(p.relative_to(repo))
+        raw_path = str(p.relative_to(repo).as_posix())
         event["raw_payload_ref"] = raw_path
 
     append_jsonl_line(event_jsonl_path(repo, ts), event)

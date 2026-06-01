@@ -140,7 +140,7 @@ def compute_all(repo_root: Path) -> dict[str, Any]:
         ev_id = ev.get("event_id")
         if not ev_id:
             continue
-        rel = str(jsonl_path.relative_to(repo_root))
+        rel = str(jsonl_path.relative_to(repo_root).as_posix())
         # id-to-path entry uses a JSONL line locator: "<path>#L<line>"
         id_to_path[ev_id] = f"{rel}#L{lineno}"
         path_to_id[f"{rel}#L{lineno}"] = ev_id
@@ -368,7 +368,7 @@ def _collect_ir_records(repo_root: Path) -> list[tuple[str, dict[str, Any]]]:
     if not base.exists():
         return out
     for md in sorted(base.rglob("*.md")):
-        rel = str(md.relative_to(repo_root))
+        rel = str(md.relative_to(repo_root).as_posix())
         try:
             rec = parse_file(md)
         except Exception:

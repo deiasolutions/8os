@@ -95,7 +95,7 @@ def phase_0_preflight(repo: Path) -> tuple[bool, str]:
     version_file = dot8os(repo) / "version"
     if not version_file.exists():
         raise SystemExit(f"no .8os/version at {repo} — not an 8OS repo")
-    current = version_file.read_text().strip()
+    current = version_file.read_text(encoding="utf-8").strip()
     if current == TARGET_VERSION:
         return (True, current)
     if current == SOURCE_VERSION:
@@ -132,7 +132,7 @@ def phase_1_vendored_bodies(repo: Path, plan: MigrationPlan) -> None:
     for ptype, decl in _VENDORED_PROJECTIONS.items():
         target = base / f"{ptype}.yml"
         new_text = dump_yaml(decl["vendored_body"])
-        if target.exists() and target.read_text() == new_text:
+        if target.exists() and target.read_text(encoding="utf-8") == new_text:
             continue
         atomic_write_text(target, new_text)
         plan.refreshed(ptype)
@@ -155,7 +155,7 @@ def phase_2_relocate(repo: Path, plan: MigrationPlan) -> None:
         try:
             rec = parse_file(md)
         except Exception as exc:
-            plan.warn(None, "parse-failure", f"{md.relative_to(repo)}: {exc}")
+            plan.warn(None, "parse-failure", f"{md.relative_to(repo).as_posix()}: {exc}")
             continue
         fm = rec.frontmatter
         ptypes = list(fm.get("projection_types") or [])
@@ -182,7 +182,7 @@ def phase_2_relocate(repo: Path, plan: MigrationPlan) -> None:
             plan.warn(
                 fm.get("id"),
                 "non-flat-position",
-                f"record at {md.relative_to(repo)} is not directly under "
+                f"record at {md.relative_to(repo).as_posix()} is not directly under "
                 f"ir/{scope}/; skipping subdirectory relocation",
             )
             continue
@@ -193,13 +193,13 @@ def phase_2_relocate(repo: Path, plan: MigrationPlan) -> None:
             plan.warn(
                 fm.get("id"),
                 "relocation-target-occupied",
-                f"target {target.relative_to(repo)} already exists; left "
-                f"source {md.relative_to(repo)} alone",
+                f"target {target.relative_to(repo).as_posix()} already exists; left "
+                f"source {md.relative_to(repo).as_posix()} alone",
             )
             continue
-        old_rel = str(md.relative_to(repo))
+        old_rel = str(md.relative_to(repo).as_posix())
         md.rename(target)
-        plan.relocated(fm.get("id") or md.stem, old_rel, str(target.relative_to(repo)))
+        plan.relocated(fm.get("id") or md.stem, old_rel, str(target.relative_to(repo).as_posix()))
 
 
 # ---------------------------------------------------------------------------
@@ -215,7 +215,7 @@ def phase_3_backfill(repo: Path, plan: MigrationPlan) -> None:
         try:
             rec = parse_file(md)
         except Exception as exc:
-            plan.warn(None, "parse-failure", f"{md.relative_to(repo)}: {exc}")
+            plan.warn(None, "parse-failure", f"{md.relative_to(repo).as_posix()}: {exc}")
             continue
         fm = deepcopy(rec.frontmatter)
         current = fm.get("authored_via")
@@ -357,6 +357,11 @@ def migrate(repo: Path) -> dict[str, Any]:
 
 
 def main() -> int:
+    for _stream in (sys.stdout, sys.stderr):
+        try:
+            _stream.reconfigure(encoding="utf-8")
+        except (AttributeError, ValueError):
+            pass
     ap = argparse.ArgumentParser(
         description="Migrate 8OS repo from v1.0.0 to v1.0.1-partial."
     )

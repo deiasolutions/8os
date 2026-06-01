@@ -111,7 +111,7 @@ def load_projection_body(repo: Path, projection_type: str) -> dict[str, Any]:
     raise KernelError(
         NOT_FOUND,
         f"projection type {projection_type!r} not found "
-        f"(checked {vendored.relative_to(repo)} and {record_path.relative_to(repo)})",
+        f"(checked {vendored.relative_to(repo).as_posix()} and {record_path.relative_to(repo).as_posix()})",
         input_field="projection_types",
         offending_value=projection_type,
     )

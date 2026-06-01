@@ -144,7 +144,7 @@ def _load_oauth_credentials() -> dict[str, Any] | None:
         try:
             import json
 
-            data = json.loads(creds_file.read_text())
+            data = json.loads(creds_file.read_text(encoding="utf-8"))
             token = (
                 data.get("claudeAiOauth", {}).get("accessToken")
                 if isinstance(data, dict)

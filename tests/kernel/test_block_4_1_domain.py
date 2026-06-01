@@ -198,7 +198,7 @@ def test_reindex_check_rejects_empty_string_domain(initialized: Path, run_op):
         intention_text="Hand-authored with empty-string domain.",
         resolution_text=None,
     )
-    bad_path.write_text(serialize(rec))
+    bad_path.write_text(serialize(rec), encoding="utf-8")
     run_op("kernel.reindex", {"mode": "rebuild"})
     with pytest.raises(KernelError) as exc:
         run_op("kernel.reindex", {"mode": "check"})
@@ -354,7 +354,7 @@ def test_backward_compat_pre_block_4_1_record(initialized: Path, run_op):
         intention_text="Legacy intention with no domain field.",
         resolution_text=None,
     )
-    legacy_path.write_text(serialize(legacy_rec))
+    legacy_path.write_text(serialize(legacy_rec), encoding="utf-8")
     # Reindex picks it up cleanly.
     run_op("kernel.reindex", {"mode": "rebuild"})
     # Reindex --check passes (no domain field is fine).
@@ -389,8 +389,8 @@ def test_v101partial_to_v110dev1_upgrade_refreshes_domain_default_field(
     body["optional_frontmatter"] = [
         f for f in optional if f.get("name") != "domain_default"
     ]
-    body_path.write_text(dump_yaml(body))
-    (repo / ".8os" / "version").write_text("1.0.1-partial\n")
+    body_path.write_text(dump_yaml(body), encoding="utf-8")
+    (repo / ".8os" / "version").write_text("1.0.1-partial\n", encoding="utf-8")
     run_op("kernel.reindex", {"mode": "rebuild"})
 
     env = run_op("kernel.init", {

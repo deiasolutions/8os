@@ -388,7 +388,7 @@ def test_reindex_check_rejects_record_missing_authored_via(initialized: Path, ru
         intention_text="Hand-authored without authored_via.",
         resolution_text=None,
     )
-    bad_path.write_text(serialize(rec))
+    bad_path.write_text(serialize(rec), encoding="utf-8")
     run_op("kernel.reindex", {"mode": "rebuild"})
     with pytest.raises(KernelError) as exc:
         run_op("kernel.reindex", {"mode": "check"})
@@ -421,8 +421,8 @@ def test_v100_to_v101partial_upgrade_refreshes_target_subdirectory_fields(
         path = body_dir / f"{ptype}.yml"
         body = load_yaml_file(path) or {}
         body.pop("target_subdirectory", None)
-        path.write_text(dump_yaml(body))
-    (repo / ".8os" / "version").write_text("1.0.0\n")
+        path.write_text(dump_yaml(body), encoding="utf-8")
+    (repo / ".8os" / "version").write_text("1.0.0\n", encoding="utf-8")
     run_op("kernel.reindex", {"mode": "rebuild"})
 
     env = run_op("kernel.init", {
@@ -476,12 +476,12 @@ def _reset_to_v100(repo: Path, run_op) -> None:
         path = body_dir / f"{ptype}.yml"
         body = load_yaml_file(path) or {}
         body.pop("target_subdirectory", None)
-        path.write_text(dump_yaml(body))
+        path.write_text(dump_yaml(body), encoding="utf-8")
     for md in (repo / "ir").rglob("*.md"):
         rec = parse_file(md)
         rec.frontmatter["authored_via"] = None
-        md.write_text(serialize(rec))
-    (repo / ".8os" / "version").write_text("1.0.0\n")
+        md.write_text(serialize(rec), encoding="utf-8")
+    (repo / ".8os" / "version").write_text("1.0.0\n", encoding="utf-8")
     # Don't run reindex --check (would fail on null authored_via);
     # write_all from `--rebuild` mode is fine.
     from eightos._indexes import write_all as _write_all
@@ -527,7 +527,7 @@ def test_migration_relocates_v1_records_to_subdirectories(initialized: Path, run
     relocated = repo / "ir" / "test-scope" / "_predictions" / "pred-100.prediction.md"
     assert relocated.exists()
     assert not flat.exists()
-    assert (repo / ".8os" / "version").read_text().strip() == KERNEL_VERSION
+    assert (repo / ".8os" / "version").read_text(encoding="utf-8").strip() == KERNEL_VERSION
 
 
 def test_migration_backfills_authored_via(initialized: Path, run_op):

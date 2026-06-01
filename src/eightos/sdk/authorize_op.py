@@ -71,7 +71,7 @@ def run(payload: dict[str, Any]) -> dict[str, Any]:
     op_event = make_event(
         event_type="operation",
         ir_node_id=auth_id,
-        ir_node_path_at_event=str(target.relative_to(repo)),
+        ir_node_path_at_event=str(target.relative_to(repo).as_posix()),
         resolver_id="kernel",
         bridge_id=bid,
         intention={
@@ -101,7 +101,7 @@ def run(payload: dict[str, Any]) -> dict[str, Any]:
     return {
         "data": {
             "authorization_ir_id": auth_id,
-            "path": str(target.relative_to(repo)),
+            "path": str(target.relative_to(repo).as_posix()),
             "valid_through": valid_through,
         },
         "event_id": op_event["event_id"],

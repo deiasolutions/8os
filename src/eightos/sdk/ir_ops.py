@@ -379,7 +379,7 @@ def new(payload: dict[str, Any]) -> dict[str, Any]:
             summary=summary,
         )
 
-    relpath = str(target_path.relative_to(repo))
+    relpath = str(target_path.relative_to(repo).as_posix())
 
     # Pre-allocate the operation event id; the new record references it as its
     # creation event (resolution_event stays null because the (I, R) is open).
@@ -626,7 +626,7 @@ def _author_policy_supersession(
     op_event = make_event(
         event_type="operation",
         ir_node_id=new_id,
-        ir_node_path_at_event=str(new_abs.relative_to(repo)),
+        ir_node_path_at_event=str(new_abs.relative_to(repo).as_posix()),
         resolver_id="kernel.calibrator",
         bridge_id=None,
         intention={
@@ -715,7 +715,7 @@ def _author_proposal_approval_supersession(
     op_event = make_event(
         event_type="operation",
         ir_node_id=new_id,
-        ir_node_path_at_event=str(new_abs.relative_to(repo)),
+        ir_node_path_at_event=str(new_abs.relative_to(repo).as_posix()),
         resolver_id="kernel.calibrator",
         bridge_id=None,
         intention={
@@ -774,7 +774,7 @@ def _new_tier3(
     new_event = make_event(
         event_type="operation",
         ir_node_id=slug,
-        ir_node_path_at_event=str(event_jsonl_path(repo, ts).relative_to(repo)),
+        ir_node_path_at_event=str(event_jsonl_path(repo, ts).relative_to(repo).as_posix()),
         resolver_id="kernel",
         bridge_id=authored_via,
         intention={
@@ -801,7 +801,7 @@ def _new_tier3(
     op_event = make_event(
         event_type="operation",
         ir_node_id=slug,
-        ir_node_path_at_event=str(event_jsonl_path(repo, ts).relative_to(repo)),
+        ir_node_path_at_event=str(event_jsonl_path(repo, ts).relative_to(repo).as_posix()),
         resolver_id="kernel",
         bridge_id=authored_via,
         intention={
@@ -825,7 +825,7 @@ def _new_tier3(
     return {
         "data": {
             "ir_id": slug,
-            "path": f"{target.relative_to(repo)}#L<append>",
+            "path": f"{target.relative_to(repo).as_posix()}#L<append>",
             "tier": 3,
         },
         "event_id": op_event["event_id"],
@@ -923,7 +923,7 @@ def _require_scope_exists(repo: Path, scope_id: str) -> None:
     if not scope_record.exists():
         raise KernelError(
             NOT_FOUND,
-            f"scope {scope_id!r} not declared (no {scope_record.relative_to(repo)})",
+            f"scope {scope_id!r} not declared (no {scope_record.relative_to(repo).as_posix()})",
             input_field="scope_id",
             offending_value=scope_id,
             suggested_action="declare the scope via kernel.ir.new with projection_types: [_kernel.scope]",
@@ -1184,7 +1184,7 @@ def list_(payload: dict[str, Any]) -> dict[str, Any]:
             rows.append(
                 {
                     "ir_id": fm["id"],
-                    "path": str(md.relative_to(repo)),
+                    "path": str(md.relative_to(repo).as_posix()),
                     "tier": tier,
                     "collapsed_summary": fm.get("collapsed_summary", ""),
                     "status": fm.get("status", "open"),
@@ -1210,7 +1210,7 @@ def list_(payload: dict[str, Any]) -> dict[str, Any]:
             rows.append(
                 {
                     "ir_id": ev_id,
-                    "path": f"{jsonl_path.relative_to(repo)}#L{lineno}",
+                    "path": f"{jsonl_path.relative_to(repo).as_posix()}#L{lineno}",
                     "tier": 3,
                     "collapsed_summary": (ev.get("intention") or {}).get("text", "")[:140],
                     "status": "resolved" if ev.get("outcome") == "accepted" else "open",
@@ -1369,7 +1369,7 @@ def expand(payload: dict[str, Any]) -> dict[str, Any]:
     new_dir = old_abs.parent / slug
     new_abs = new_dir / "_node.md"
     if new_dir.exists():
-        raise KernelError(ALREADY_EXISTS, f"target folder {new_dir.relative_to(repo)} already exists")
+        raise KernelError(ALREADY_EXISTS, f"target folder {new_dir.relative_to(repo).as_posix()} already exists")
 
     new_dir.mkdir(parents=True, exist_ok=False)
     os.replace(old_abs, new_abs)
@@ -1378,7 +1378,7 @@ def expand(payload: dict[str, Any]) -> dict[str, Any]:
     rec.frontmatter["expanded_into"] = ir_id  # self-reference signals expansion
     atomic_write_text(new_abs, serialize(rec))
 
-    new_rel = str(new_abs.relative_to(repo))
+    new_rel = str(new_abs.relative_to(repo).as_posix())
     ts = now_iso()
     op_event = make_event(
         event_type="operation",
@@ -1433,7 +1433,7 @@ def collapse(payload: dict[str, Any]) -> dict[str, Any]:
 
     new_abs = folder.parent / f"{folder.name}.md"
     if new_abs.exists():
-        raise KernelError(ALREADY_EXISTS, f"target {new_abs.relative_to(repo)} occupied")
+        raise KernelError(ALREADY_EXISTS, f"target {new_abs.relative_to(repo).as_posix()} occupied")
 
     rec = parse_file(old_abs)
     rec.frontmatter["expanded_into"] = None
@@ -1441,7 +1441,7 @@ def collapse(payload: dict[str, Any]) -> dict[str, Any]:
     os.replace(old_abs, new_abs)
     folder.rmdir()
 
-    new_rel = str(new_abs.relative_to(repo))
+    new_rel = str(new_abs.relative_to(repo).as_posix())
     ts = now_iso()
     op_event = make_event(
         event_type="operation",
@@ -1543,7 +1543,7 @@ def promote(payload: dict[str, Any]) -> dict[str, Any]:
         resolution_text=resolution,
     )
 
-    relpath = str(target_path.relative_to(repo))
+    relpath = str(target_path.relative_to(repo).as_posix())
 
     # Append the promotion marker on the source JSONL.
     marker = {"event_id": event_id, "promoted_to": target_slug, "promoted_at": ts}
@@ -1646,7 +1646,7 @@ def supersede(payload: dict[str, Any]) -> dict[str, Any]:
     op_event = make_event(
         event_type="operation",
         ir_node_id=new_id,
-        ir_node_path_at_event=str(new_abs.relative_to(repo)),
+        ir_node_path_at_event=str(new_abs.relative_to(repo).as_posix()),
         resolver_id="kernel",
         bridge_id=None,
         intention={
@@ -1687,7 +1687,7 @@ def supersede(payload: dict[str, Any]) -> dict[str, Any]:
         "data": {
             "old_ir_id": old_id,
             "new_ir_id": new_id,
-            "new_path": str(new_abs.relative_to(repo)),
+            "new_path": str(new_abs.relative_to(repo).as_posix()),
         },
         "event_id": op_event["event_id"],
         "indexes_updated": [
@@ -1906,7 +1906,7 @@ def cancel(payload: dict[str, Any]) -> dict[str, Any]:
     op_event = make_event(
         event_type="operation",
         ir_node_id=ir_id,
-        ir_node_path_at_event=str(abs_path.relative_to(repo)),
+        ir_node_path_at_event=str(abs_path.relative_to(repo).as_posix()),
         resolver_id="kernel",
         bridge_id=authored_via if authored_via != "outside" else None,
         intention={

@@ -214,7 +214,7 @@ def test_authorize_creates_tier2_record(initialized: Path, run_op):
     assert envelope["status"] == "ok"
     p = initialized / envelope["data"]["path"]
     assert p.exists()
-    assert "ir/_ops/authorization/" in str(p)
+    assert "ir/_ops/authorization/" in p.as_posix()
 
 
 def test_gatekeeper_check_with_valid_authorization(initialized: Path, run_op):

@@ -30,6 +30,14 @@ from .sdk._runner import run as run_op
 
 
 def main(argv: list[str] | None = None) -> int:
+    # JSON wire output is UTF-8 on every platform (RFC 8259). The default
+    # console codec on Windows is cp1252, which mangles non-ASCII payloads;
+    # pin stdout/stderr to UTF-8 so the subprocess contract is portable.
+    for _stream in (sys.stdout, sys.stderr):
+        try:
+            _stream.reconfigure(encoding="utf-8")
+        except (AttributeError, ValueError):  # pragma: no cover - non-reconfigurable stream
+            pass
     parser = argparse.ArgumentParser(prog="8os", add_help=True)
     parser.add_argument("op", nargs="?", help="operation name (e.g. kernel.init)")
     parser.add_argument("--version", action="store_true", help="print kernel version and exit")

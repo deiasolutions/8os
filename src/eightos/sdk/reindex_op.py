@@ -242,7 +242,7 @@ def _records_missing_authored_via(repo) -> list[str]:
             continue
         value = rec.frontmatter.get("authored_via")
         if not isinstance(value, str) or not value.strip():
-            out.append(str(md.relative_to(repo)))
+            out.append(str(md.relative_to(repo).as_posix()))
     return out
 
 
@@ -278,7 +278,7 @@ def _records_with_invalid_cancelled_state(repo) -> list[dict[str, str]]:
             rec = parse_file(md)
         except Exception:
             continue
-        rel = str(md.relative_to(repo))
+        rel = str(md.relative_to(repo).as_posix())
         records.append((rel, rec.frontmatter))
         if rec.frontmatter.get("status") == "cancelled":
             rid = rec.frontmatter.get("id")
@@ -338,7 +338,7 @@ def _records_with_invalid_domain(repo) -> list[str]:
         if value is None:
             continue
         if not isinstance(value, str) or not value.strip():
-            out.append(str(md.relative_to(repo)))
+            out.append(str(md.relative_to(repo).as_posix()))
     return out
 
 
@@ -371,7 +371,7 @@ def _records_with_invalid_visible_when(repo) -> list[dict[str, str]]:
         value = rec.frontmatter["visible_when"]
         if value is None:
             continue
-        rel = str(md.relative_to(repo))
+        rel = str(md.relative_to(repo).as_posix())
         try:
             predicates.validate_predicate(value)
         except KernelError as exc:
@@ -417,5 +417,5 @@ def _records_with_invalid_data_classification(repo) -> list[str]:
         if value is None:
             continue
         if not isinstance(value, str) or not value.strip():
-            out.append(str(md.relative_to(repo)))
+            out.append(str(md.relative_to(repo).as_posix()))
     return out

@@ -208,7 +208,7 @@ def run(payload: dict[str, Any]) -> dict[str, Any]:
     op_event = make_event(
         event_type="operation",
         ir_node_id=sel_id,
-        ir_node_path_at_event=str(target.relative_to(repo)),
+        ir_node_path_at_event=str(target.relative_to(repo).as_posix()),
         resolver_id="kernel",
         bridge_id=None,
         intention={
@@ -240,7 +240,7 @@ def run(payload: dict[str, Any]) -> dict[str, Any]:
         "data": {
             "selected_resolver_id": selected,
             "selection_ir_id": sel_id,
-            "selection_path": str(target.relative_to(repo)),
+            "selection_path": str(target.relative_to(repo).as_posix()),
             "fitness_scores": scored,
             "voi_consultation": voi_consultation,
             "depth_budget": depth_budget,

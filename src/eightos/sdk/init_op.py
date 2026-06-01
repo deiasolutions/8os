@@ -86,7 +86,7 @@ def run(payload: dict[str, Any]) -> dict[str, Any]:
     # binary is newer than the repo (folds in new vendored content without
     # touching existing user content).
     if version_path.exists():
-        existing = version_path.read_text().strip()
+        existing = version_path.read_text(encoding="utf-8").strip()
         if _version_tuple(existing) > _version_tuple(KERNEL_VERSION):
             raise KernelError(
                 KERNEL_VERSION_MISMATCH,
@@ -113,7 +113,7 @@ def run(payload: dict[str, Any]) -> dict[str, Any]:
 
     # ---- bootstrap event (pre-allocate id so the bootstrap (I, R) refs it) -
     bootstrap_relpath = str(
-        ir_collapsed_path(repo, user_scope_id, BOOTSTRAP_SLUG).relative_to(repo)
+        ir_collapsed_path(repo, user_scope_id, BOOTSTRAP_SLUG).relative_to(repo).as_posix()
     )
     event = make_event(
         event_type="operation",
@@ -332,7 +332,7 @@ def run(payload: dict[str, Any]) -> dict[str, Any]:
             "bootstrap_ir_id": BOOTSTRAP_SLUG,
             "bootstrap_path": bootstrap_relpath,
             "primary_scope_path": str(
-                kernel_record_path(repo, "scope", user_scope_id).relative_to(repo)
+                kernel_record_path(repo, "scope", user_scope_id).relative_to(repo).as_posix()
             ),
             "mode": "fresh",
             "previous_version": None,
@@ -1181,7 +1181,7 @@ def _run_upgrade(repo: Path, *, existing_version: str) -> dict[str, Any]:
         target = body_dir / f"{ptype}.yml"
         new_text = dump_yaml(decl["vendored_body"])
         if target.exists():
-            if target.read_text() == new_text:
+            if target.read_text(encoding="utf-8") == new_text:
                 continue
             atomic_write_text(target, new_text)
             bodies_refreshed.append(ptype)
@@ -1236,7 +1236,7 @@ def _run_upgrade(repo: Path, *, existing_version: str) -> dict[str, Any]:
         bodies_added or bodies_refreshed or projections_added or resolvers_added
     )
     bootstrap_relpath = str(
-        ir_collapsed_path(repo, user_scope, BOOTSTRAP_SLUG).relative_to(repo)
+        ir_collapsed_path(repo, user_scope, BOOTSTRAP_SLUG).relative_to(repo).as_posix()
     )
 
     # Pure noop: version already matches, nothing to write.
@@ -1246,7 +1246,7 @@ def _run_upgrade(repo: Path, *, existing_version: str) -> dict[str, Any]:
                 "bootstrap_ir_id": BOOTSTRAP_SLUG,
                 "bootstrap_path": bootstrap_relpath,
                 "primary_scope_path": str(
-                    kernel_record_path(repo, "scope", user_scope).relative_to(repo)
+                    kernel_record_path(repo, "scope", user_scope).relative_to(repo).as_posix()
                 ),
                 "mode": "noop",
                 "previous_version": existing_version,
@@ -1329,7 +1329,7 @@ def _run_upgrade(repo: Path, *, existing_version: str) -> dict[str, Any]:
             "bootstrap_ir_id": BOOTSTRAP_SLUG,
             "bootstrap_path": bootstrap_relpath,
             "primary_scope_path": str(
-                kernel_record_path(repo, "scope", user_scope).relative_to(repo)
+                kernel_record_path(repo, "scope", user_scope).relative_to(repo).as_posix()
             ),
             "mode": mode,
             "previous_version": existing_version,

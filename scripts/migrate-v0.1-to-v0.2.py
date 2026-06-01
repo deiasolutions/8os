@@ -122,7 +122,7 @@ def phase_0_preflight(repo: Path, operator_id_flag: str | None, plan: MigrationP
     version_file = dot8os(repo) / "version"
     if not version_file.exists():
         raise SystemExit(f"no .8os/version at {repo} — not an 8OS repo")
-    current_version = version_file.read_text().strip()
+    current_version = version_file.read_text(encoding="utf-8").strip()
     if current_version == TARGET_VERSION:
         return ("", True)
     if current_version != "0.1.0":
@@ -255,7 +255,7 @@ def _phase_1_1_scopes(repo: Path, operator_id: str, ts: str, plan: MigrationPlan
         )
         staged.append(StagedFile(target, content_text=serialize(record)))
         plan.created(scope_id)
-        plan.removed(str(scope_yml.relative_to(repo)))
+        plan.removed(str(scope_yml.relative_to(repo).as_posix()))
     if staged:
         commit_staged(staged)
         # Remove the source files only after the targets commit successfully.
@@ -297,7 +297,7 @@ def _phase_1_2_resolvers(repo: Path, operator_id: str, ts: str, plan: MigrationP
         )
         staged.append(StagedFile(target, content_text=serialize(record)))
         plan.created(rid)
-        plan.removed(str(yml.relative_to(repo)))
+        plan.removed(str(yml.relative_to(repo).as_posix()))
     if staged:
         commit_staged(staged)
         for yml in sorted(src.glob("*.yml")):
@@ -422,7 +422,7 @@ def _phase_1_3_bridges(repo: Path, operator_id: str, ts: str, plan: MigrationPla
         )
         staged.append(StagedFile(target, content_text=serialize(record)))
         plan.created(bid)
-        plan.removed(str(yml.relative_to(repo)))
+        plan.removed(str(yml.relative_to(repo).as_posix()))
     if staged:
         commit_staged(staged)
         for yml in sorted(src.glob("*.yml")):
@@ -477,7 +477,7 @@ def _phase_1_4_projections(repo: Path, operator_id: str, ts: str, plan: Migratio
         )
         staged.append(StagedFile(target, content_text=serialize(record)))
         plan.created(pid)
-        plan.removed(str(yml.relative_to(repo)))
+        plan.removed(str(yml.relative_to(repo).as_posix()))
     if staged:
         commit_staged(staged)
         for yml in sorted(src.glob("*.yml")):
@@ -667,7 +667,7 @@ def _phase_2_5_refresh_schemas(repo: Path, plan: MigrationPlan) -> None:
     if schemas_path.exists():
         for f in sorted(schemas_path.glob("*.json")):
             f.unlink()
-            plan.removed(str(f.relative_to(repo)))
+            plan.removed(str(f.relative_to(repo).as_posix()))
     _vendor_schemas(repo)
 
 
@@ -685,7 +685,7 @@ def _phase_2_4_purge_legacy_vendored_bodies(repo: Path, plan: MigrationPlan) -> 
         p = base / name
         if p.exists():
             p.unlink()
-            plan.removed(str(p.relative_to(repo)))
+            plan.removed(str(p.relative_to(repo).as_posix()))
 
 
 # ---------------------------------------------------------------------------
@@ -990,6 +990,11 @@ def migrate(repo: Path, *, operator_id: str | None = None) -> dict[str, Any]:
 
 
 def main() -> int:
+    for _stream in (sys.stdout, sys.stderr):
+        try:
+            _stream.reconfigure(encoding="utf-8")
+        except (AttributeError, ValueError):
+            pass
     ap = argparse.ArgumentParser(description="Migrate 8OS repo from v0.1.0 to v0.2.")
     ap.add_argument("--repo", type=Path, default=Path.cwd(), help="repo root (default: cwd)")
     ap.add_argument("--operator-id", default=None, help="primary_operator_id; overrides bootstrap-inferred id")

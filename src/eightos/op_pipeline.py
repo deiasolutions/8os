@@ -611,7 +611,7 @@ def _author_policy_evaluation(
     op_event = make_event(
         event_type="operation",
         ir_node_id=eval_id,
-        ir_node_path_at_event=str(target.relative_to(repo)),
+        ir_node_path_at_event=str(target.relative_to(repo).as_posix()),
         resolver_id="kernel",
         bridge_id=None,
         intention={
@@ -919,6 +919,6 @@ def invalidate_cache_for_policy(repo: Path, policy_id: str) -> list[str]:
         # later returns None (treated as expired). The record stays on
         # disk for audit; only the cache field is updated.
         rec.frontmatter["valid_through"] = expired_ts
-        (repo / rel).write_text(serialize(rec))
+        (repo / rel).write_text(serialize(rec), encoding="utf-8")
         invalidated.append(eid)
     return invalidated

@@ -27,7 +27,7 @@ def _schema_filename(op: str, version: int, kind: str) -> str:
 def load_schema(op: str, version: int, kind: str) -> dict[str, Any]:
     """Load a schema bundled in the eightos.schemas package."""
     fname = _schema_filename(op, version, kind)
-    with resources.files("eightos.schemas").joinpath(fname).open("r") as f:
+    with resources.files("eightos.schemas").joinpath(fname).open("r", encoding="utf-8") as f:
         return json.load(f)
 
 
